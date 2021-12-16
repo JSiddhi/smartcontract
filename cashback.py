@@ -9,7 +9,7 @@ from solc import compile_standard
 from solcx import install_solc
 install_solc(version= 'latest')
 from solc import compile_standard
-from splcx import compile_source
+from solcx import compile_source
 
 with open("cashback.sol") as c:
  contractText=c.read()
