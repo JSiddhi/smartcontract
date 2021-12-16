@@ -8,11 +8,11 @@ from web3 import Web3
 from solc import compile_standard
 
 with open("cashback.sol") as c:
-contractText=c.read()
+ contractText=c.read()
 with open(".pk") as pkfile:
-privateKey=pkfile.read()
+ privateKey=pkfile.read()
 with open(".infura") as infurafile:
-infuraKey=infurafile.read()
+ infuraKey=infurafile.read()
 
 compiled_sol = compile_source(contractText)
 contract_id, contract_interface = compiled_sol.popitem()
