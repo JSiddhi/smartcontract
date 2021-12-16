@@ -7,7 +7,7 @@ from web3.providers.websocket import WebsocketProvider
 from web3 import Web3
 from solc import compile_standard
 from solcx import install_solc
-install solc(version= 'latest')
+install_solc(version= 'latest')
 from solc import compile_standard
 
 with open("cashback.sol") as c:
