@@ -1,4 +1,5 @@
-
+// Creating a contract
+contract siddhi_05
 {
   // Defining a function to
   // return a string
