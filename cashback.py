@@ -1,11 +1,16 @@
 import time
-from web3 import Web3, HTTPProvider
+import json
+import web3
+from eth_account import Account
+from web3.auto import w3
+from web3.providers.websocket import WebsocketProvider
+from web3 import Web3
 
 contract_address     = [0x25338e1e162a9d3f8F4be67633277d5DfcACa9Eb]
 wallet_private_key   = [db4f93c1ea15afb1db3f5ca216931597f0065fb0d730818c200727591ae97e]
 wallet_address       = [0xf6b15DF3BaC48e94C23CcA42bfC83f870455bCa8]
 
-w3 = Web3(HTTPProvider(https://mainnet.infura.io/v3/0c23c4378d26402fb5e8a2e5cd2d9c6a))
+w3 = Web3(WebsocketProvider(https://mainnet.infura.io/v3/0c23c4378d26402fb5e8a2e5cd2d9c6a))
 
 w3.eth.enable_unaudited_features()
 
