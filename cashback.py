@@ -23,6 +23,3 @@ print(" ")
 print('Smart Contract Name: ', contract.functions.name().call())
 print(" ")
 print('Symbol: ', contract.functions.symbol().call())
-
-
-		 \
