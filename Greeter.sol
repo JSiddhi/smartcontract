@@ -4,7 +4,7 @@ contract Greeter {
  string public greeting;
 
  constructor() public {
-  greeting = 'Hello Renjith and Siddhi connection established';
+  greeting = 'Hello, Smart Contract deployed successfully';
  }
 
  function setGreeting(string memory _greeting) public {
