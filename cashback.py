@@ -4,16 +4,25 @@ from web3 import Web3
 from solcx import compile_source
 
 # Solidity source code
-compiled_sol = compile_source(
+pragma solidity >0.5.0;
 
-{
-  // Defining a function to
-  // return a string
-  function get_output() public pure returns (string) 
-  {
-      return ("Hi, your contract ran successfully");
-  }
-}
+     contract Greeter {
+        string public greeting;
+
+         constructor() public {
+             greeting = 'Hello';
+        }
+
+         function setGreeting(string memory _greeting) public {
+            greeting = _greeting;
+        }
+
+         function greet() view public returns (string memory) {
+             return greeting;
+        }
+     }
+  
+)
 # retrieve the contract interface
 contract_id, contract_interface = compiled_sol.popitem()
 
