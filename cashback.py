@@ -4,7 +4,7 @@ from web3 import Web3
 infura_url = 'https://mainnet.infura.io/v3/0c23c4378d26402fb5e8a2e5cd2d9c6a'
 web3 = Web3(Web3.HTTPProvider(infura_url))
 
-abi = json.loads('[
+abi = json.loads([
 	{
 		"constant": true,
 		"inputs": [],
@@ -19,7 +19,7 @@ abi = json.loads('[
 		"stateMutability": "view",
 		"type": "function"
 	}
-]'
+])
 
 address = '0xf6b15DF3BaC48e94C23CcA42bfC83f870455bCa8'
 
