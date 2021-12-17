@@ -1,104 +1,50 @@
-import time
-from web3 import Web3, HTTPProvider
+from solcx import install_solc
+install_solc(version='latest')
+from web3 import Web3
+from solcx import compile_source
+Solidity source code
+# Solidity source code
+compiled_sol = compile_source(
 
-contract_address     = [0x25338e1e162a9d3f8F4be67633277d5DfcACa9Eb]
-wallet_private_key   = ['db4f93c1ea15afb1db3f5ca216931597f0065fb0d730818c200727591ae97e']
-wallet_address       = [0xf6b15DF3BaC48e94C23CcA42bfC83f870455bCa8]
+{
+  // Defining a function to
+  // return a string
+  function get_output() public pure returns (string) 
+  {
+      return ("Hi, your contract ran successfully");
+  }
+}
+# retrieve the contract interface
+contract_id, contract_interface = compiled_sol.popitem()
 
-w3 = Web3(HTTPProvider('https://ropsten.infura.io/v3/0c23c4378d26402fb5e8a2e5cd2d9c6a'))
+# get bytecode / bin
+bytecode = contract_interface['bin']
 
-w3.eth.enable_unaudited_features()
+# get abi
+abi = contract_interface['abi']
 
-contract = w3.eth.contract(address = contract_address, abi = contract_abi.abi)
+# web3.py instance
+w3 = Web3(Web3.EthereumTesterProvider())
 
-def send_ether_to_contract(amount_in_ether):
+# set pre-funded account as sender
+w3.eth.default_account = w3.eth.accounts[0]
+    >>> Greeter = w3.eth.contract(abi=abi, bytecode=bytecode)
 
-    amount_in_wei = w3.toWei(amount_in_ether,'ether');
+# Submit the transaction that deploys the contract
+>>> tx_hash = Greeter.constructor().transact()
 
-    nonce = w3.eth.getTransactionCount(wallet_address)
+# Wait for the transaction to be mined, and get the transaction receipt
+tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
-    txn_dict = {
-            'to': contract_address,
-            'value': amount_in_wei,
-            'gas': 2000000,
-            'gasPrice': w3.toWei('40', 'gwei'),
-            'nonce': nonce,
-            'chainId': 3
-    }
+greeter = w3.eth.contract(
+address=tx_receipt.contractAddress,
+abi=abi
+)
 
-    signed_txn = w3.eth.account.signTransaction(txn_dict, wallet_private_key)
+Greeter.functions.greet().call()
+'Hello'
 
-    txn_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-
-    txn_receipt = None
-
-    count = 0
-    while txn_receipt is None and (count < 30):
-
-        txn_receipt = w3.eth.getTransactionReceipt(txn_hash)
-
-        print(txn_receipt)
-
-        time.sleep(10)
-
-
-    if txn_receipt is None:
-        return {'status': 'failed', 'error': 'timeout'}
-
-    return {'status': 'added', 'txn_receipt': txn_receipt}
-
-
-def check_whether_address_is_approved(address):
-
-    return contract.functions.isApproved(address).call()
-
-
-def broadcast_an_opinion(covfefe):
-
-    nonce = w3.eth.getTransactionCount(wallet_address)
-
-    txn_dict = contract.functions.broadcastOpinion(covfefe).buildTransaction({
-        'chainId': 3,
-        'gas': 140000,
-        'gasPrice': w3.toWei('40', 'gwei'),
-        'nonce': nonce,
-    })
-
-    signed_txn = w3.eth.account.signTransaction(txn_dict, private_key=wallet_private_key)
-
-    result = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-
-    tx_receipt = w3.eth.getTransactionReceipt(result)
-
-    count = 0
-    while tx_receipt is None and (count < 30):
-
-        time.sleep(10)
-
-        tx_receipt = w3.eth.getTransactionReceipt(result)
-
-        print(tx_receipt)
-
-
-    if tx_receipt is None:
-        return {'status': 'failed', 'error': 'timeout'}
-
-    processed_receipt = contract.events.OpinionBroadcast().processReceipt(tx_receipt)
-
-    print(processed_receipt)
-
-    output = "Address {} broadcasted the opinion: {}"\
-        .format(processed_receipt[0].args._soapboxer, processed_receipt[0].args._opinion)
-    print(output)
-
-    return {'status': 'added', 'processed_receipt': processed_receipt}
-
-if __name__ == "__main__":
-
-    send_ether_to_contract(0.03)
-
-    is_approved = check_whether_address_is_approved(wallet_address)
-    
-    print(is_approved)
-
-    broadcast_an_opinion('Despite the Constant Negative Press')
+tx_hash = greeter.functions.setGreeting('Nihao').transact()
+tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
+greeter.functions.greet().call()
+'Nihao'
