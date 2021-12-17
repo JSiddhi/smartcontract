@@ -19,7 +19,7 @@ abi = json.loads('[
 		"stateMutability": "view",
 		"type": "function"
 	}
-]')
+		 ]')
 
 address = '0xf6b15DF3BaC48e94C23CcA42bfC83f870455bCa8'
 
@@ -39,3 +39,5 @@ print('Smart Contract Name: ', contract.functions.name().call())
 print(" ")
 print('Symbol: ', contract.functions.symbol().call())
 
+
+		 \
