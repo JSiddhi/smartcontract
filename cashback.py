@@ -2,7 +2,7 @@ from solcx import install_solc
 install_solc(version='latest')
 from web3 import Web3
 from solcx import compile_source
-Solidity source code
+
 # Solidity source code
 compiled_sol = compile_source(
 
