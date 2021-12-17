@@ -8,7 +8,7 @@ from web3.providers.websocket import WebsocketProvider
 from web3 import Web3
 from solc import compile_standard
 
-with open("casback.sol") as c:
+with open("Greeter.sol") as c:
   contractText=c.read()
 with open(".pk") as pkfile:
   privateKey=pkfile.read()
