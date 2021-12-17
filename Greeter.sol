@@ -1,10 +1,17 @@
-// Creating a contract
-contract siddhi_05
-{
-  // Defining a function to
-  // return a string
-  function get_output() public pure returns (string) 
-  {
-      return ("Hi, your contract ran successfully");
-  }
+pragma solidity ^0.8.0;
+
+contract Greeter {
+ string public greeting;
+
+ constructor() public {
+  greeting = 'Hello Renjith and Siddhi connection established';
+ }
+
+ function setGreeting(string memory _greeting) public {
+  greeting = _greeting;
+ }
+
+ function greet() view public returns (string memory) {
+  return greeting;
+ }
 }
